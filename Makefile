@@ -45,7 +45,7 @@ setup:
 
 
 # make the submission tar file
-ALLFILES = README.md LICENSE Makefile cmput379_assignment_3_report.pdf CMakeLists.txt $(SOURCESFILES) $(TESTFILES)
+ALLFILES = README.md LICENSE Makefile CMakeLists.txt $(SOURCESFILES) $(TESTFILES)
 TARTARGET = submit
 
 tar:
