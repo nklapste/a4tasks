@@ -59,6 +59,8 @@ tar:
 clean:
 	$(RM) $(BUILDDIR)
 	$(RM) $(BINARY)
+	$(RM) $(TARTARGET).tar.gz
+	$(RM) x$(TARTARGET).tar.gz
 
 distclean: clean
 
