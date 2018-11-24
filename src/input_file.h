@@ -1,3 +1,5 @@
+// Copyright 2018 Nathan Klapstein
+
 /**
  * input_file.h
  *
