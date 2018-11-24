@@ -7,7 +7,12 @@
  * @version 0.0.0
  */
 
+#include <string>
 #include <iostream>
+#include <chrono>
+
+using std::string;
+using std::chrono::milliseconds;
 
 /**
  * Main entry point for a4tasks.
@@ -27,6 +32,10 @@ int main(int argc, char **argv) {
                "\tPlease follow: 'a4tasks inputFile monitorTime NITER'\n");
         exit(EINVAL);
     }
+
+    string inputFile = argv[1];
+    milliseconds monitorTime = static_cast<milliseconds>(atoi(argv[2]));
+    uint nIter = static_cast<uint>(atoi(argv[3]));
 
     return 0;
 }
