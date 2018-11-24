@@ -8,6 +8,7 @@
  */
 
 #include "task_manager.h"
+#include "input_file.h"
 
 /**
  * Getter for a {@code TaskManager}'s {@code milliseconds}.
@@ -32,6 +33,9 @@ uint TaskManager::getNIter() const {
  */
 void TaskManager::start() {
     // TODO: implement
+    for (;;) {
+        checkInputFile(inputFileStream);
+    }
 }
 
 /**
@@ -46,6 +50,18 @@ TaskManager::TaskManager(const string &inputFile,
                          const uint &nIter) :
         inputFile(inputFile),
         monitorTime(monitorTime),
-        nIter(nIter) {
+        nIter(nIter),
+        inputFileStream(ifstream(inputFile)) {
+}
 
+void TaskManager::checkInputFile(ifstream &trafficFileStream) {
+    string line;
+    if (trafficFileStream.is_open()) {
+        if (getline(trafficFileStream, line)) {
+            parseInputFileLine(line);  // TODO: expand
+        } else {
+            trafficFileStream.close();
+            printf("DEBUG: finished reading traffic file\n");
+        }
+    }
 }

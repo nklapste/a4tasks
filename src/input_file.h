@@ -22,7 +22,7 @@
 #define INVALID_LINE -1
 #define COMMENT_LINE 0
 #define RESOURCE_LINE 1
-#define TASK_LINE 1
+#define TASK_LINE 2
 
 using std::string;
 using std::vector;
@@ -38,5 +38,7 @@ int getInputFileType(const string &line);
 ResourceArg parseResourceArg(const string &arg);
 
 ResourcesLine parseResourcesLine(const string &line);
+
+void parseInputFileLine(const string &line);
 
 #endif  // A4TASKS_INPUT_FILE_H
