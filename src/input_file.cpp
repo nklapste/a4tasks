@@ -48,6 +48,11 @@ int getInputFileType(string &line) {
     }
 }
 
+/**
+ * Parse a {@code std::string} representing a {@code ResourceArg}.
+ * @param arg {@code std::string}
+ * @return {@code ResourceArg}
+ */
 ResourceArg parseResourceArg(string &arg) {
     std::string delimiter = ":";
     std::string name = arg.substr(0, arg.find(delimiter));
@@ -57,7 +62,7 @@ ResourceArg parseResourceArg(string &arg) {
 }
 
 /**
- * Parse a line within the input file line representing a ResourcesLine.
+ * Parse a line within the input file line representing a {@code ResourcesLine}.
  *
  * @param line {@code std::string}
  * @return {@code ResourcesLine}
@@ -85,12 +90,12 @@ ResourcesLine parseResourcesLine(string &line) {
 }
 
 /**
- * Parse a line within the input file line representing a TaskLine.
+ * Parse a line within the input file line representing a {@code TaskLine}.
  *
  * task taskName busyTime idleTime name1:value1 name2:value2 ...
  *
  * @param line {@code std::string}
- * @return {@code ResourcesLine}
+ * @return {@code TaskLine}
  */
 TaskLine parseTaskLine(string &line) {
     istringstream iss(line);
