@@ -1,21 +1,23 @@
 language: cpp
-compiler: gcc
 os: linux
 
 
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-7
+    - g++-7
+
 
 stages:
-  - test
+- test
+
 
 before_script:
-  - export CC=gcc-7
-  - export CXX=g++-7
+- export CC=gcc-7
+- export CXX=g++-7
+
 
 jobs:
   include:
@@ -35,7 +37,9 @@ jobs:
     script:
       - cppcheck --error-exitcode=1 .
   - name: "lint"
+    language: python
+    python: 3.6
     install:
-      - pip install cpplint
+      - pip3 install cpplint
     script:
-      - cpplint .
+      - cpplint src/*
