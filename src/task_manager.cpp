@@ -55,6 +55,11 @@ TaskManager::TaskManager(const string &inputFile,
         inputFileStream(ifstream(inputFile)) {
 }
 
+/**
+ * Read a section from the input file.
+ *
+ * @param trafficFileStream {@code trafficFileStream}
+ */
 void TaskManager::checkInputFile(ifstream &trafficFileStream) {
     string line;
     if (trafficFileStream.is_open()) {
