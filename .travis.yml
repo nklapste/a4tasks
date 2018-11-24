@@ -20,6 +20,8 @@ before_script:
 
 
 jobs:
+  allow_failures:
+  - script: cpplint src/*
   include:
   - stage: test
     name: "make"
