@@ -40,7 +40,7 @@ int getInputFileType(const string &line) {
         printf("WARNING: found invalid line: %s\n", line.c_str());
         return INVALID_LINE;
     }
-    if (trafficFileItems.at(1) == RESOURCE_FLAG) { // check if delay line
+    if (trafficFileItems.at(1) == RESOURCE_FLAG) {
         printf("DEBUG: found ResourcesLine: %s\n", line.c_str());
         return RESOURCE_LINE;
     } else {

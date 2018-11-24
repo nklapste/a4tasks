@@ -39,4 +39,4 @@ ResourceArg parseResourceArg(const string &arg);
 
 ResourcesLine parseResourcesLine(const string &line);
 
-#endif  //A4TASKS_INPUT_FILE_H
+#endif  // A4TASKS_INPUT_FILE_H
