@@ -7,6 +7,7 @@
  * @version 0.0.0
  */
 
+#include <string>
 #include <sstream>
 #include <iterator>
 
@@ -21,7 +22,7 @@ using std::istream_iterator;
  * @param line {@code std::string}
  * @return {@code int} integer representing the type of the input file line.
  */
-int getInputFileType(string &line) {
+int getInputFileType(const string &line) {
     if (line.length() < 1) {
         printf("WARNING: found invalid line: %s\n", line.c_str());
         return INVALID_LINE;
@@ -53,7 +54,7 @@ int getInputFileType(string &line) {
  * @param arg {@code std::string}
  * @return {@code ResourceArg}
  */
-ResourceArg parseResourceArg(string &arg) {
+ResourceArg parseResourceArg(const string &arg) {
     std::string delimiter = ":";
     std::string name = arg.substr(0, arg.find(delimiter));
     uint value = static_cast<uint>(stoi(
@@ -67,7 +68,7 @@ ResourceArg parseResourceArg(string &arg) {
  * @param line {@code std::string}
  * @return {@code ResourcesLine}
  */
-ResourcesLine parseResourcesLine(string &line) {
+ResourcesLine parseResourcesLine(const string &line) {
     istringstream iss(line);
     vector<string> resourceLineArgs((istream_iterator<string>(iss)),
                                     istream_iterator<string>());
@@ -84,7 +85,7 @@ ResourcesLine parseResourcesLine(string &line) {
         resourceArgs.emplace_back(parseResourceArg(*it));
     }
 
-    printf("DEBUG: parsed ResourcesLine\n"); // TODO: improve log
+    printf("DEBUG: parsed ResourcesLine\n");  // TODO: improve log
 
     return ResourcesLine(lineFlag, resourceArgs);
 }
@@ -97,7 +98,7 @@ ResourcesLine parseResourcesLine(string &line) {
  * @param line {@code std::string}
  * @return {@code TaskLine}
  */
-TaskLine parseTaskLine(string &line) {
+TaskLine parseTaskLine(const string &line) {
     istringstream iss(line);
     vector<string> taskLineArgs((istream_iterator<string>(iss)),
                                 istream_iterator<string>());
@@ -115,7 +116,7 @@ TaskLine parseTaskLine(string &line) {
         resourceArgs.emplace_back(parseResourceArg(*it));
     }
 
-    printf("DEBUG: parsed TaskLine\n"); // TODO: improve log
+    printf("DEBUG: parsed TaskLine\n");  // TODO: improve log
 
     return TaskLine(lineFlag, taskName, busyTime, idleTime, resourceArgs);
 }

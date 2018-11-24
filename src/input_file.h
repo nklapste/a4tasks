@@ -32,10 +32,10 @@ typedef tuple<string, int> ResourceArg;
 typedef tuple<string, vector<ResourceArg>> ResourcesLine;
 typedef tuple<string, string, milliseconds, milliseconds, vector<ResourceArg>> TaskLine;
 
-int getInputFileType(string &line);
+int getInputFileType(const string &line);
 
-ResourceArg parseResourceArg(string &arg);
+ResourceArg parseResourceArg(const string &arg);
 
-ResourcesLine parseResourcesLine(string &line);
+ResourcesLine parseResourcesLine(const string &line);
 
 #endif //A4TASKS_INPUT_FILE_H
