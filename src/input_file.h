@@ -10,8 +10,9 @@
 #ifndef A4TASKS_INPUT_FILE_H
 #define A4TASKS_INPUT_FILE_H
 
-#include <tuple>
 #include <chrono>
+#include <string>
+#include <tuple>
 #include <vector>
 
 #define RESOURCE_FLAG "resources"
@@ -38,4 +39,4 @@ ResourceArg parseResourceArg(const string &arg);
 
 ResourcesLine parseResourcesLine(const string &line);
 
-#endif //A4TASKS_INPUT_FILE_H
+#endif  //A4TASKS_INPUT_FILE_H
