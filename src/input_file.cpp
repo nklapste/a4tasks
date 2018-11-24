@@ -19,7 +19,7 @@ using std::istream_iterator;
  * Attempt to get the line type for a input file.
  *
  * @param line {@code std::string}
- * @return {@code int} integer representing the type of the traffic file line.
+ * @return {@code int} integer representing the type of the input file line.
  */
 int getInputFileType(string &line) {
     if (line.length() < 1) {
@@ -55,18 +55,20 @@ ResourceArg parseResourceArg(string &arg){
 }
 
 /**
- * Parse a line within the input file line representing a Resource item.
+ * Parse a line within the input file line representing a ResourcesLine.
  *
  * @param line {@code std::string}
- * @return {@code trafficFileRouteItem}
+ * @return {@code ResourcesLine}
  */
 ResourcesLine parseResourcesLine(string &line) {
     istringstream iss(line);
     vector<string> resourceLineArgs((istream_iterator<string>(iss)), istream_iterator<string>());
     if (resourceLineArgs.size() < 2 || resourceLineArgs.at(0) != RESOURCE_FLAG) {
-        printf("ERROR: invalid resource line: %s\n", line.c_str());
+        printf("ERROR: invalid ResourcesLine: %s\n", line.c_str());
         exit(EINVAL);
     }
+    string lineFlag = resourceLineArgs.at(0);
+
     vector<ResourceArg> resourceArgs;
     for (auto it = resourceLineArgs.begin()+1 ; it != resourceLineArgs.end(); ++it) {
         resourceArgs.emplace_back(parseResourceArg(*it));
@@ -74,5 +76,35 @@ ResourcesLine parseResourcesLine(string &line) {
 
     printf("DEBUG: parsed ResourcesLine\n"); // TODO: improve log
 
-    return ResourcesLine(resourceLineArgs.at(0), resourceArgs);
+    return ResourcesLine(lineFlag, resourceArgs);
+}
+
+/**
+ * Parse a line within the input file line representing a TaskLine.
+ *
+ * task taskName busyTime idleTime name1:value1 name2:value2 ...
+ *
+ * @param line {@code std::string}
+ * @return {@code ResourcesLine}
+ */
+TaskLine parseTaskLine(string  &line){
+    istringstream iss(line);
+    vector<string> taskLineArgs((istream_iterator<string>(iss)), istream_iterator<string>());
+    if (taskLineArgs.size() < 5 || taskLineArgs.at(0) != TASK_FLAG) {
+        printf("ERROR: invalid TaskLine: %s\n", line.c_str());
+        exit(EINVAL);
+    }
+    string lineFlag = taskLineArgs.at(0);
+    string taskName = taskLineArgs.at(1);
+    milliseconds busyTime = static_cast<milliseconds>(stoi(taskLineArgs.at(2)));
+    milliseconds idleTime = static_cast<milliseconds>(stoi(taskLineArgs.at(4)));
+
+    vector<ResourceArg> resourceArgs;
+    for (auto it = taskLineArgs.begin()+5 ; it != taskLineArgs.end(); ++it) {
+        resourceArgs.emplace_back(parseResourceArg(*it));
+    }
+
+    printf("DEBUG: parsed TaskLine\n"); // TODO: improve log
+
+    return TaskLine(lineFlag, taskName, busyTime, idleTime, resourceArgs);
 }
