@@ -26,3 +26,10 @@ milliseconds TaskManager::getMonitorTime() {
 uint TaskManager::getNIter() const {
     return nIter;
 }
+
+/**
+ * Start the {@code TaskManager}.
+ */
+void TaskManager::start() {
+    // TODO: implement
+}

@@ -22,6 +22,8 @@ public:
 
     milliseconds getMonitorTime();
 
+    void start();
+
 private:
     string inputFile;
     milliseconds monitorTime;
