@@ -32,7 +32,8 @@ int getInputFileType(string &line) {
     }
 
     istringstream iss(line);
-    vector<string> trafficFileItems((istream_iterator<string>(iss)), istream_iterator<string>());
+    vector<string> trafficFileItems((istream_iterator<string>(iss)),
+                                    istream_iterator<string>());
 
     if (trafficFileItems.size() < 2) {
         printf("WARNING: found invalid line: %s\n", line.c_str());
@@ -47,10 +48,11 @@ int getInputFileType(string &line) {
     }
 }
 
-ResourceArg parseResourceArg(string &arg){
+ResourceArg parseResourceArg(string &arg) {
     std::string delimiter = ":";
     std::string name = arg.substr(0, arg.find(delimiter));
-    uint value = static_cast<uint>(stoi(arg.substr(arg.find(delimiter) + 1, arg.length())));
+    uint value = static_cast<uint>(stoi(
+            arg.substr(arg.find(delimiter) + 1, arg.length())));
     return ResourceArg(name, value);
 }
 
@@ -62,15 +64,18 @@ ResourceArg parseResourceArg(string &arg){
  */
 ResourcesLine parseResourcesLine(string &line) {
     istringstream iss(line);
-    vector<string> resourceLineArgs((istream_iterator<string>(iss)), istream_iterator<string>());
-    if (resourceLineArgs.size() < 2 || resourceLineArgs.at(0) != RESOURCE_FLAG) {
+    vector<string> resourceLineArgs((istream_iterator<string>(iss)),
+                                    istream_iterator<string>());
+    if (resourceLineArgs.size() < 2 ||
+        resourceLineArgs.at(0) != RESOURCE_FLAG) {
         printf("ERROR: invalid ResourcesLine: %s\n", line.c_str());
         exit(EINVAL);
     }
     string lineFlag = resourceLineArgs.at(0);
 
     vector<ResourceArg> resourceArgs;
-    for (auto it = resourceLineArgs.begin()+1 ; it != resourceLineArgs.end(); ++it) {
+    for (auto it = resourceLineArgs.begin() + 1;
+         it != resourceLineArgs.end(); ++it) {
         resourceArgs.emplace_back(parseResourceArg(*it));
     }
 
@@ -87,9 +92,10 @@ ResourcesLine parseResourcesLine(string &line) {
  * @param line {@code std::string}
  * @return {@code ResourcesLine}
  */
-TaskLine parseTaskLine(string  &line){
+TaskLine parseTaskLine(string &line) {
     istringstream iss(line);
-    vector<string> taskLineArgs((istream_iterator<string>(iss)), istream_iterator<string>());
+    vector<string> taskLineArgs((istream_iterator<string>(iss)),
+                                istream_iterator<string>());
     if (taskLineArgs.size() < 5 || taskLineArgs.at(0) != TASK_FLAG) {
         printf("ERROR: invalid TaskLine: %s\n", line.c_str());
         exit(EINVAL);
@@ -100,7 +106,7 @@ TaskLine parseTaskLine(string  &line){
     milliseconds idleTime = static_cast<milliseconds>(stoi(taskLineArgs.at(4)));
 
     vector<ResourceArg> resourceArgs;
-    for (auto it = taskLineArgs.begin()+5 ; it != taskLineArgs.end(); ++it) {
+    for (auto it = taskLineArgs.begin() + 5; it != taskLineArgs.end(); ++it) {
         resourceArgs.emplace_back(parseResourceArg(*it));
     }
 
