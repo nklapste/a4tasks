@@ -1,14 +1,65 @@
 language: cpp
 compiler: gcc
-os: linux
+
+matrix:
+  include:
+  # works on Precise and Trusty
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-4.9
+    env:
+    - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+
+  # works on Precise and Trusty
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-5
+    env:
+    - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+
+  # works on Precise and Trusty
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-6
+    env:
+    - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+  # works on Precise and Trusty
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-7
+    env:
+    - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+  - os:
+    language: python
+    install:
+    - pip install cpplint
+
+    jobs:
+      include:
+      - stage: test
+        name: "lint"
+        script:
+          - cpplint .
 
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-7
 
 stages:
   - test
@@ -34,8 +85,3 @@ jobs:
       - sudo apt-get install -qq cppcheck
     script:
       - cppcheck --error-exitcode=1 .
-  - name: "lint"
-    install:
-      - pip install cpplint
-    script:
-      - cpplint .
