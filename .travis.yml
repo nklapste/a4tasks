@@ -68,6 +68,7 @@ jobs:
     script:
       - cppcheck --error-exitcode=1 .
   - name: "lint"
+    language: python
     python: 3.6
     install:
       - pip3 install cpplint
