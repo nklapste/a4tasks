@@ -10,9 +10,22 @@
 #ifndef A4TASKS_TASK_MANAGER_H
 #define A4TASKS_TASK_MANAGER_H
 
+#include <string>
+#include <chrono>
 
-class task_manager {
+using std::string;
+using std::chrono::milliseconds;
 
+class TaskManager {
+public:
+    uint getNIter() const;
+
+    milliseconds getMonitorTime();
+
+private:
+    string inputFile;
+    milliseconds monitorTime;
+    uint nIter;
 };
 
 

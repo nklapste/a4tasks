@@ -8,3 +8,21 @@
  */
 
 #include "task_manager.h"
+
+/**
+ * Getter for a {@code TaskManager}'s {@code milliseconds}.
+ *
+ * @return {@code milliseconds}
+ */
+milliseconds TaskManager::getMonitorTime() {
+    return monitorTime;
+}
+
+/**
+ * Getter for a {@code TaskManager}'s {@code nIter}.
+ *
+ * @return {@code uint}
+ */
+uint TaskManager::getNIter() const {
+    return nIter;
+}
