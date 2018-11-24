@@ -3,4 +3,4 @@ project(a4tasks)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(a4tasks src/main.cpp src/input_file.cpp src/input_file.h)
+add_executable(a4tasks src/a4tasks.cpp src/input_file.cpp src/input_file.h)
