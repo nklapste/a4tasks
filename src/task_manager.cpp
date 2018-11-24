@@ -32,6 +32,7 @@ uint TaskManager::getNIter() const {
  * Start the {@code TaskManager}.
  */
 void TaskManager::start() {
+    printf("INFO: staring TaskManager\n");
     // TODO: implement
     for (;;) {
         checkInputFile(inputFileStream);
