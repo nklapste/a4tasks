@@ -33,3 +33,19 @@ uint TaskManager::getNIter() const {
 void TaskManager::start() {
     // TODO: implement
 }
+
+/**
+ * Construct a {@code TaskManager}.
+ *
+ * @param inputFile {@code std::string}
+ * @param monitorTime {@code milliseconds}
+ * @param nIter {@code uint}
+ */
+TaskManager::TaskManager(const string &inputFile,
+                         const milliseconds &monitorTime,
+                         const uint &nIter) :
+        inputFile(inputFile),
+        monitorTime(monitorTime),
+        nIter(nIter) {
+
+}

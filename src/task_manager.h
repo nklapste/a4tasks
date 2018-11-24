@@ -18,6 +18,9 @@ using std::chrono::milliseconds;
 
 class TaskManager {
 public:
+    TaskManager(const string &inputFile, const milliseconds &monitorTime,
+                const uint &nIter);
+
     uint getNIter() const;
 
     milliseconds getMonitorTime();
@@ -26,7 +29,9 @@ public:
 
 private:
     string inputFile;
+
     milliseconds monitorTime;
+
     uint nIter;
 };
 
