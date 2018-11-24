@@ -34,3 +34,8 @@ jobs:
       - sudo apt-get install -qq cppcheck
     script:
       - cppcheck --error-exitcode=1 .
+  - name: "lint"
+    install:
+      - pip install cpplint
+    script:
+      - cpplint .
