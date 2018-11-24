@@ -42,4 +42,4 @@ jobs:
     install:
       - pip3 install cpplint
     script:
-      - cpplint .
+      - cpplint src/*
