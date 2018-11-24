@@ -70,6 +70,6 @@ jobs:
   - name: "lint"
     python: 3.6
     install:
-      - pip install cpplint
+      - pip3 install cpplint
     script:
       - cpplint
