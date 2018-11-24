@@ -39,10 +39,40 @@ int getInputFileType(string &line) {
         return INVALID_LINE;
     }
     if (trafficFileItems.at(1) == RESOURCE_FLAG) { // check if delay line
-        printf("DEBUG: found RESOURCE line: %s\n", line.c_str());
+        printf("DEBUG: found ResourcesLine: %s\n", line.c_str());
         return RESOURCE_LINE;
     } else {
-        printf("DEBUG: found TASK line: %s\n", line.c_str());
+        printf("DEBUG: found TaskLine: %s\n", line.c_str());
         return TASK_LINE;
     }
+}
+
+ResourceArg parseResourceArg(string &arg){
+    std::string delimiter = ":";
+    std::string name = arg.substr(0, arg.find(delimiter));
+    uint value = static_cast<uint>(stoi(arg.substr(arg.find(delimiter) + 1, arg.length())));
+    return ResourceArg(name, value);
+}
+
+/**
+ * Parse a line within the input file line representing a Resource item.
+ *
+ * @param line {@code std::string}
+ * @return {@code trafficFileRouteItem}
+ */
+ResourcesLine parseResourcesLine(string &line) {
+    istringstream iss(line);
+    vector<string> resourceLineArgs((istream_iterator<string>(iss)), istream_iterator<string>());
+    if (resourceLineArgs.size() < 2 || resourceLineArgs.at(0) != RESOURCE_FLAG) {
+        printf("ERROR: invalid resource line: %s\n", line.c_str());
+        exit(EINVAL);
+    }
+    vector<ResourceArg> resourceArgs;
+    for (auto it = resourceLineArgs.begin()+1 ; it != resourceLineArgs.end(); ++it) {
+        resourceArgs.emplace_back(parseResourceArg(*it));
+    }
+
+    printf("DEBUG: parsed ResourcesLine\n"); // TODO: improve log
+
+    return ResourcesLine(resourceLineArgs.at(0), resourceArgs);
 }

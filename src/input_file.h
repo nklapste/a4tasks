@@ -34,4 +34,8 @@ typedef tuple<string, string, milliseconds, milliseconds, vector<ResourceArg>> T
 
 int getInputFileType(string &line);
 
+ResourceArg parseResourceArg(string &arg);
+
+ResourcesLine parseResourcesLine(string &line);
+
 #endif //A4TASKS_INPUT_FILE_H
