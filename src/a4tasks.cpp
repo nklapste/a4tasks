@@ -22,7 +22,7 @@
  * @return {@code int}
  */
 int main(int argc, char **argv) {
-    if (argc < 3 || argc > 4) {
+    if (argc != 4) {
         printf("ERROR: invalid argument format:\n"
                "\tPlease follow: 'a4tasks inputFile monitorTime NITER'\n");
         exit(EINVAL);
