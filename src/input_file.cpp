@@ -27,7 +27,7 @@ int getInputFileType(const string &line) {
         printf("WARNING: found invalid line: %s\n", line.c_str());
         return INVALID_LINE;
     }
-    if (line.substr(0, 1) == "#") {
+    if (line.substr(0, 1) == COMMENT_FLAG) {
         printf("DEBUG: found comment line: %s\n", line.c_str());
         return INVALID_LINE;
     }
