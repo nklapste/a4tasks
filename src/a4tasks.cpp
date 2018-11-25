@@ -10,7 +10,7 @@
 #include <string>
 #include <iostream>
 #include <chrono>
-#include "task_manager.h"
+#include "thread_manager.h"
 
 using std::string;
 using std::chrono::milliseconds;
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     milliseconds monitorTime = static_cast<milliseconds>(atoi(argv[2]));
     uint nIter = static_cast<uint>(atoi(argv[3]));
 
-    TaskManager taskManager = TaskManager(inputFile, monitorTime, nIter);
+    ThreadManager taskManager = ThreadManager(inputFile, monitorTime, nIter);
     taskManager.start();
 
     return 0;

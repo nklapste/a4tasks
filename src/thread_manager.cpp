@@ -1,54 +1,54 @@
 // Copyright 2018 Nathan Klapstein
 
 /**
- * task_manager.cpp
+ * thread_manager.cpp
  *
  * @author Nathan Klapstein (nklapste)
  * @version 0.0.0
  */
 
-#include "task_manager.h"
+#include "thread_manager.h"
 #include "input_file.h"
 
 /**
- * Getter for a {@code TaskManager}'s {@code milliseconds}.
+ * Getter for a {@code ThreadManager}'s {@code milliseconds}.
  *
  * @return {@code milliseconds}
  */
-milliseconds TaskManager::getMonitorTime() {
+milliseconds ThreadManager::getMonitorTime() {
     return monitorTime;
 }
 
 /**
- * Getter for a {@code TaskManager}'s {@code nIter}.
+ * Getter for a {@code ThreadManager}'s {@code nIter}.
  *
  * @return {@code uint}
  */
-uint TaskManager::getNIter() const {
+uint ThreadManager::getNIter() const {
     return nIter;
 }
 
 /**
- * Start the {@code TaskManager}.
+ * Start the {@code ThreadManager}.
  */
-void TaskManager::start() {
-    printf("INFO: staring TaskManager\n");
+void ThreadManager::start() {
+    printf("INFO: staring ThreadManager\n");
     // TODO: implement
     for (;;) {
-        checkInputFile(inputFileStream);
+        checkInputFileLine(inputFileStream);
     }
 }
 
 /**
- * Construct a {@code TaskManager}.
+ * Construct a {@code ThreadManager}.
  *
  * @param inputFile {@code std::string}
  * @param monitorTime {@code milliseconds}
  * @param nIter {@code uint}
  */
-TaskManager::TaskManager(const string &inputFile,
-                         const milliseconds &monitorTime,
-                         const uint &nIter) :
+ThreadManager::ThreadManager(const string &inputFile,
+                             const milliseconds &monitorTime,
+                             const uint &nIter) :
         inputFile(inputFile),
         monitorTime(monitorTime),
         nIter(nIter),
@@ -56,11 +56,11 @@ TaskManager::TaskManager(const string &inputFile,
 }
 
 /**
- * Read a section from the input file.
+ * Read a line from the input file.
  *
  * @param trafficFileStream {@code trafficFileStream}
  */
-void TaskManager::checkInputFile(ifstream &trafficFileStream) {
+void ThreadManager::checkInputFileLine(ifstream &trafficFileStream) {
     string line;
     if (trafficFileStream.is_open()) {
         if (getline(trafficFileStream, line)) {

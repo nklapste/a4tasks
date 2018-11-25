@@ -1,7 +1,7 @@
 // Copyright 2018 Nathan Klapstein
 
 /**
- * task_manager.h
+ * thread_manager.h
  *
  * @author Nathan Klapstein (nklapste)
  * @version 0.0.0
@@ -18,10 +18,10 @@ using std::string;
 using std::chrono::milliseconds;
 using std::ifstream;
 
-class TaskManager {
+class ThreadManager {
 public:
-    TaskManager(const string &inputFile, const milliseconds &monitorTime,
-                const uint &nIter);
+    ThreadManager(const string &inputFile, const milliseconds &monitorTime,
+                  const uint &nIter);
 
     milliseconds getMonitorTime();
 
@@ -38,8 +38,7 @@ private:
 
     ifstream inputFileStream;
 
-    void checkInputFile(ifstream &trafficFileStream);
-
+    void checkInputFileLine(ifstream &trafficFileStream);
 };
 
 
