@@ -50,7 +50,7 @@ milliseconds TaskThread::getTime() {
  * the following message.
  */
 void TaskThread::completePrint() {
-    printf("INFO: task: %s (tid= %lu, iter= %u, time=%limsec",
+    printf("INFO: task: %s (tid= %lu, iter= %u, time=%limsec\n",
            getTaskID().getTaskIDString().c_str(),
            getTID(),
            getIterNum(),
