@@ -10,8 +10,9 @@
 #ifndef A4TASKS_INPUT_FILE_H
 #define A4TASKS_INPUT_FILE_H
 
-#include <tuple>
 #include <chrono>
+#include <string>
+#include <tuple>
 #include <vector>
 
 #define RESOURCE_FLAG "resources"
@@ -21,7 +22,7 @@
 #define INVALID_LINE -1
 #define COMMENT_LINE 0
 #define RESOURCE_LINE 1
-#define TASK_LINE 1
+#define TASK_LINE 2
 
 using std::string;
 using std::vector;
@@ -32,6 +33,12 @@ typedef tuple<string, int> ResourceArg;
 typedef tuple<string, vector<ResourceArg>> ResourcesLine;
 typedef tuple<string, string, milliseconds, milliseconds, vector<ResourceArg>> TaskLine;
 
-int getInputFileType(string &line);
+int getInputFileType(const string &line);
 
-#endif //A4TASKS_INPUT_FILE_H
+ResourceArg parseResourceArg(const string &arg);
+
+ResourcesLine parseResourcesLine(const string &line);
+
+void parseInputFileLine(const string &line);
+
+#endif  // A4TASKS_INPUT_FILE_H
