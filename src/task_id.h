@@ -15,9 +15,9 @@
 
 using std::string;
 
-class TaskId {
+class TaskID {
 public:
-    explicit TaskId(uint taskIdNum);
+    explicit TaskID(uint taskIdNum);
 
     uint getTaskIDNum() const;
 

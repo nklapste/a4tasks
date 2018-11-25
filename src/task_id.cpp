@@ -11,14 +11,24 @@
 
 using std::to_string;
 
-TaskId::TaskId(uint taskIdNum) :
+TaskID::TaskID(uint taskIdNum) :
         taskIDNum(taskIdNum), taskIDString(to_string(taskIdNum)) {
 }
 
-uint TaskId::getTaskIDNum() const {
+/**
+ * Getter for a {@code TaskID}'s ID number as a {@code uint}.
+ *
+ * @return {@code uint}
+ */
+uint TaskID::getTaskIDNum() const {
     return taskIDNum;
 }
 
-string TaskId::getTaskIDString() const {
+/**
+ * Getter for a {@code TaskID}'s ID number as a {@code std::string}.
+ *
+ * @return {@code std::string}
+ */
+string TaskID::getTaskIDString() const {
     return taskIDString;
 }
