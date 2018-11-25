@@ -8,3 +8,18 @@
  */
 
 #include "monitor_thread.h"
+
+/**
+ * Prints the status of all tasks (i.e. {@code TaskThread}s.
+ *
+ * Note: tasks can only have three possible states:
+ * - ``WAIT``
+ * - ``RUN``
+ * - ``IDLE``
+ */
+void MonitorThread::monitorPrint() {
+    // TODO: fill in
+//    printf("INFO: monitor: [WAIT] %s\n"
+//           "\t[RUN] %s\n"
+//           "\t[IDLE] %s\n");
+}

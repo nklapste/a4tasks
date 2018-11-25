@@ -29,6 +29,12 @@ public:
 
     void start();
 
+    void terminationPrint();
+
+    void listResources();
+
+    void listTasks();
+
 private:
     string inputFile;
 

@@ -13,7 +13,8 @@
 #include "managed_thread.h"
 
 class MonitorThread : public ManagedThread {
-
+public:
+    void monitorPrint();
 };
 
 
