@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif //A4TASKS_TASK_THREAD_H
+#endif  //A4TASKS_TASK_THREAD_H
