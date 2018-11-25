@@ -36,10 +36,21 @@ public:
     void listTasks();
 
 private:
+    /**
+     * Path to the input file to parse and use.
+     */
     string inputFile;
 
+    /**
+     * Number of {@code std::chrono::milliseconds} that has to pass before a
+     * instance of a {@code MonitorThread} will start and run.
+     */
     milliseconds monitorTime;
 
+    /**
+     * Integer noting the amount of iterations that each {@code TaskThread}
+     * must execute before the {@code ThreadManager} finishes.
+     */
     uint nIter;
 
     ifstream inputFileStream;
