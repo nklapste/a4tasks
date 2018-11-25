@@ -30,4 +30,4 @@ private:
 };
 
 
-#endif //A4TASKS_TASK_ID_H
+#endif  //A4TASKS_TASK_ID_H
