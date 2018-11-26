@@ -58,16 +58,16 @@ ThreadManager::ThreadManager(const string &inputFile,
 /**
  * Read a line from the input file.
  *
- * @param trafficFileStream {@code trafficFileStream}
+ * @param inputFileStream {@code trafficFileStream}
  */
-void ThreadManager::checkInputFileLine(ifstream &trafficFileStream) {
+void ThreadManager::checkInputFileLine(ifstream &inputFileStream) {
     string line;
-    if (trafficFileStream.is_open()) {
-        if (getline(trafficFileStream, line)) {
+    if (inputFileStream.is_open()) {
+        if (getline(inputFileStream, line)) {
             parseInputFileLine(line);  // TODO: expand
         } else {
-            trafficFileStream.close();
-            printf("DEBUG: finished reading traffic file\n");
+            inputFileStream.close();
+            printf("DEBUG: finished reading input file\n");
         }
     }
 }

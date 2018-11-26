@@ -55,7 +55,7 @@ private:
 
     ifstream inputFileStream;
 
-    void checkInputFileLine(ifstream &trafficFileStream);
+    void checkInputFileLine(ifstream &inputFileStream);
 };
 
 
