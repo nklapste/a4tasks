@@ -120,24 +120,3 @@ TaskLine parseTaskLine(const string &line) {
 
     return TaskLine(lineFlag, taskName, busyTime, idleTime, resourceArgs);
 }
-
-/**
- * Parse a line within the input file.
- *
- * @param line {@code std::string}
- * @return {@code std::string}
- */
-void parseInputFileLine(const string &line) {
-    int inputLineType = getInputFileType(line);
-
-    if (inputLineType == INVALID_LINE) {
-        printf("WARNING: skipping invalid line: %s\n", line.c_str());
-    } else if (inputLineType == COMMENT_LINE) {
-        printf("DEBUG: skipping comment line: %s\n", line.c_str());
-    } else if (inputLineType == RESOURCE_LINE) {
-        ResourcesLine resourcesLine = parseResourcesLine(line);
-    } else if (inputLineType == TASK_LINE) {
-        TaskLine taskLine = parseTaskLine(line);
-    }
-    // TODO: act on parsed input line
-}

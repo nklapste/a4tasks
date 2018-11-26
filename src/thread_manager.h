@@ -56,6 +56,8 @@ private:
     ifstream inputFileStream;
 
     void checkInputFileLine(ifstream &inputFileStream);
+
+    void parseInputFileLine(const string &line);
 };
 
 

@@ -39,6 +39,6 @@ ResourceArg parseResourceArg(const string &arg);
 
 ResourcesLine parseResourcesLine(const string &line);
 
-void parseInputFileLine(const string &line);
+TaskLine parseTaskLine(const string &line);
 
 #endif  // A4TASKS_INPUT_FILE_H
