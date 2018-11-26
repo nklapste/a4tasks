@@ -10,6 +10,15 @@
 #include "task_thread.h"
 
 /**
+ * Constructor for a {@code TaskThread}.
+ *
+ * @param taskID {@code TaskID}
+ */
+TaskThread::TaskThread(TaskID taskID) : ManagedThread(), taskID(taskID) {
+
+}
+
+/**
  * Getter the a {@code TaskThread}'s {@code TaskID}.
  *
  * @return {@code TaskID}

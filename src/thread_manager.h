@@ -13,10 +13,17 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <vector>
+
+#include "monitor_thread.h"
+#include "task_thread.h"
 
 using std::string;
 using std::chrono::milliseconds;
 using std::ifstream;
+using std::vector;
+
+typedef vector<TaskThread> TaskThreadList;
 
 class ThreadManager {
 public:
@@ -54,6 +61,10 @@ private:
     uint nIter;
 
     ifstream inputFileStream;
+
+    MonitorThread monitorThread;
+
+    TaskThreadList taskThreads;
 
     void checkInputFileLine(ifstream &inputFileStream);
 

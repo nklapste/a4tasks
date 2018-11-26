@@ -12,13 +12,13 @@
 
 #include <thread>
 #include <chrono>
+#include <sstream>
 
 class ManagedThread {
 public:
     /* Explicitly using the default constructor to
      * underline the fact that it does get called */
-    ManagedThread() : the_thread() {}
-
+    explicit ManagedThread() : the_thread() {}
     ~ManagedThread() {
         stop_thread = true;
         if (the_thread.joinable()) the_thread.join();
@@ -27,6 +27,16 @@ public:
     void Start() {
         // This will start the thread. Notice move semantics!
         the_thread = std::thread(&ManagedThread::ThreadMain, this);
+        std::stringstream ss;
+        ss << the_thread.get_id();
+        printf("DEBUG: starting thread: %s\n", ss.str().c_str());
+    }
+
+    void Stop() {
+        std::stringstream ss;
+        ss << the_thread.get_id();
+        printf("DEBUG: stopping thread: %s\n", ss.str().c_str());
+        stop_thread = true;
     }
 
 private:

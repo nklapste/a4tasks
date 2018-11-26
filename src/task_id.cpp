@@ -7,12 +7,41 @@
  * @version 0.0.0
  */
 
+#include <regex>
 #include "task_id.h"
 
 using std::to_string;
 
-TaskID::TaskID(uint taskIdNum) :
-        taskIDNum(taskIdNum), taskIDString(to_string(taskIdNum)) {
+/**
+ * Parse the {@code TaskID} specified by a {@code std::string}.
+ *
+ * @param taskIDString {@code std::string}
+ * @return {@code uint}
+ */
+uint TaskID::parseTaskID(const string &taskIDString) {
+    std::regex rgx("(t)([1-9]+[0-9]*)");
+    std::match_results<string::const_iterator> matches;
+
+    std::regex_match(taskIDString, matches, rgx);
+    for (std::size_t index = 1; index < matches.size(); ++index) {
+    }
+
+    if (std::regex_search(taskIDString, matches, rgx)) {
+        uint taskIDNum = static_cast<uint>(std::stoi(matches[2], nullptr, 10));
+        return taskIDNum;
+    } else {
+        printf("ERROR: invalid taskIDString argument: %s\n",
+               taskIDString.c_str());
+        exit(EINVAL);
+    }
+}
+
+TaskID::TaskID(uint taskIDNum) :
+        taskIDNum(taskIDNum), taskIDString("t" + to_string(taskIDNum)) {
+}
+
+TaskID::TaskID(const string &taskIDString) : taskIDString(taskIDString) {
+    taskIDNum = parseTaskID(taskIDString);
 }
 
 /**

@@ -20,6 +20,8 @@ using std::chrono::milliseconds;
 
 class TaskThread : public ManagedThread {
 public:
+    explicit TaskThread(TaskID taskID);
+
     TaskID getTaskID();
 
     pthread_t getTID();

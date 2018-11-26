@@ -9,6 +9,9 @@
 
 #include "thread_manager.h"
 #include "input_file.h"
+#include "task_thread.h"
+
+using std::get;
 
 /**
  * Getter for a {@code ThreadManager}'s {@code milliseconds}.
@@ -89,6 +92,8 @@ void ThreadManager::parseInputFileLine(const string &line) {
         ResourcesLine resourcesLine = parseResourcesLine(line);
     } else if (inputLineType == TASK_LINE) {
         TaskLine taskLine = parseTaskLine(line);
+        TaskThread taskThread = TaskThread(get<1>(taskLine));
+        taskThread.Start();
     }
     // TODO: act on parsed input line
 }

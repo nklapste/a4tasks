@@ -40,7 +40,7 @@ int getInputFileType(const string &line) {
         printf("WARNING: found invalid line: %s\n", line.c_str());
         return INVALID_LINE;
     }
-    if (trafficFileItems.at(1) == RESOURCE_FLAG) {
+    if (trafficFileItems.at(0) == RESOURCE_FLAG) {
         printf("DEBUG: found ResourcesLine: %s\n", line.c_str());
         return RESOURCE_LINE;
     } else {
@@ -107,9 +107,9 @@ TaskLine parseTaskLine(const string &line) {
         exit(EINVAL);
     }
     string lineFlag = taskLineArgs.at(0);
-    string taskName = taskLineArgs.at(1);
+    TaskID taskID = TaskID(taskLineArgs.at(1));
     milliseconds busyTime = static_cast<milliseconds>(stoi(taskLineArgs.at(2)));
-    milliseconds idleTime = static_cast<milliseconds>(stoi(taskLineArgs.at(4)));
+    milliseconds idleTime = static_cast<milliseconds>(stoi(taskLineArgs.at(3)));
 
     vector<ResourceArg> resourceArgs;
     for (auto it = taskLineArgs.begin() + 5; it != taskLineArgs.end(); ++it) {
@@ -118,5 +118,5 @@ TaskLine parseTaskLine(const string &line) {
 
     printf("DEBUG: parsed TaskLine\n");  // TODO: improve log
 
-    return TaskLine(lineFlag, taskName, busyTime, idleTime, resourceArgs);
+    return TaskLine(lineFlag, taskID, busyTime, idleTime, resourceArgs);
 }

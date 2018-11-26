@@ -14,6 +14,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include "task_id.h"
 
 #define RESOURCE_FLAG "resources"
 #define TASK_FLAG "task"
@@ -31,7 +32,7 @@ using std::chrono::milliseconds;
 
 typedef tuple<string, int> ResourceArg;
 typedef tuple<string, vector<ResourceArg>> ResourcesLine;
-typedef tuple<string, string, milliseconds, milliseconds, vector<ResourceArg>> TaskLine;
+typedef tuple<string, TaskID, milliseconds, milliseconds, vector<ResourceArg>> TaskLine;
 
 int getInputFileType(const string &line);
 
