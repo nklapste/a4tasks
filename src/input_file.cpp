@@ -116,7 +116,7 @@ TaskLine parseTaskLine(const string &line) {
         resourceArgs.emplace_back(parseResourceArg(*it));
     }
 
-    // TODO: print resource ards
+    // TODO: print resource args
     printf("DEBUG: parsed TaskLine: lineFlag: %s taskID: %s busyTime: %li msec idleTime: %li msec\n",
            lineFlag.c_str(),
            taskID.getTaskIDString().c_str(),
