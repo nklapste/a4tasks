@@ -36,10 +36,20 @@ uint TaskID::parseTaskID(const string &taskIDString) {
     }
 }
 
+/**
+ * Init a {@code TaskID} from a {@code uint}.
+ *
+ * @param taskIDNum {@code uint}
+ */
 TaskID::TaskID(uint taskIDNum) :
         taskIDNum(taskIDNum), taskIDString("t" + to_string(taskIDNum)) {
 }
 
+/**
+ * Init a {@code TaskID} from a {@code std::string}.
+ *
+ * @param taskIDString {@code std::string}
+ */
 TaskID::TaskID(const string &taskIDString) : taskIDString(taskIDString) {
     taskIDNum = parseTaskID(taskIDString);
 }
