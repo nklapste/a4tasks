@@ -23,10 +23,9 @@ void MonitorThread::monitorPrint() {
 //    printf("INFO: monitor: [WAIT] %s\n"
 //           "\t[RUN] %s\n"
 //           "\t[IDLE] %s\n");
-//    for( auto const& [key, val] : threadManager->getTaskThreadMap() )
-//    {
-//        printf("TEST: %s\n", key.getTaskIDString().c_str());
-//    }
+    for (auto const&[key, val] : threadManager->getTaskThreadMap()) {
+        printf("TEST: %s\n", key.getTaskIDString().c_str());
+    }
 }
 
 MonitorThread::MonitorThread(ThreadManager *threadManager)
