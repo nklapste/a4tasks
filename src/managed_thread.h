@@ -36,18 +36,21 @@ public:
         if (the_thread.joinable()) the_thread.join();
     }
 
+    bool isRunning() {
+        return !the_thread.joinable();
+    }
+
 protected:
-private:
-    bool stop_thread = false; // Super simple thread stopping.
-
-    std::thread the_thread;
-
-    void ThreadMain() {
+    virtual void ThreadMain() {
         while (!stop_thread) {
             // Do something useful, e.g:
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
+private:
+    bool stop_thread = false; // Super simple thread stopping.
+    std::thread the_thread;
+
 };
 
 

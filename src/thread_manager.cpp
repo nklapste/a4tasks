@@ -180,7 +180,16 @@ void ThreadManager::checkMonitorThread() {
     if (monitorThreadDelayPassed()) {
         printf("DEBUG: monitor thread delay passed\n");
         setMonitorThreadDelay(monitorTime);
+        if (monitorThread.isRunning()) {
+            monitorThread.Start();
+        } else {
+            monitorThread.Stop();
+        }
         // TODO: spawn monitor thread
     }
+}
+
+TaskThreadMap ThreadManager::getTaskThreadMap() {
+    return std::move(taskThreads);
 }
 

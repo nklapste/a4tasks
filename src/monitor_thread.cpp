@@ -33,3 +33,9 @@ MonitorThread::MonitorThread(ThreadManager *threadManager)
         : ManagedThread(), threadManager(threadManager) {
     printf("TEST: %u\n", threadManager->getNIter());
 }
+
+void MonitorThread::ThreadMain() {
+    printf("TEST: started monitor thread\n");
+    monitorPrint();
+//    Stop();
+}

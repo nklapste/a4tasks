@@ -20,6 +20,9 @@ public:
 
     void monitorPrint();
 
+protected:
+    void ThreadMain() override;
+
 private:
     ThreadManager *threadManager;
 

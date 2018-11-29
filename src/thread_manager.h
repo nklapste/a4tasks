@@ -44,6 +44,7 @@ public:
 
     void listElapsedTime();
 
+    TaskThreadMap getTaskThreadMap();
 
 private:
     /**
