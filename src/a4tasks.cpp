@@ -9,9 +9,9 @@
 #include <iomanip>
 #include <string_view>
 #include <map>
-
+#include <error.h>
 std::mutex g_lockprint;
-constexpr int task_no = 2;
+constexpr int task_no = 4;
 
 struct resource {
     std::mutex mutex;
@@ -19,21 +19,20 @@ struct resource {
 
 struct simulation {
     std::atomic<bool> ready{false};
-    std::array<std::array<resource, 2>, 2> resourcesPool;
+    std::array<std::array<resource *, 4>, 2> resourcesPool;
 };
 
 struct task {
 private:
     std::string const name;
     simulation const &simul;
-    resource &left_fork;
-    resource &right_fork;
+    int r1;
+    int r2;
     std::thread lifethread;
     std::mt19937 rng{std::random_device{}()};
 public:
-    task(std::string_view n, simulation const &t, resource &l, resource &r) :
-            name(n), simul(t), left_fork(l), right_fork(r),
-            lifethread(&task::dine, this) {
+    task(std::string_view n, simulation const &t, int r1, int r2) :
+            name(n), simul(t), r1(r1), r2(r2), lifethread(&task::dine, this) {
     }
 
     ~task() {
@@ -57,12 +56,62 @@ public:
     }
 
     void run() {
+        print("task is waiting");
+        try {
+            if (r1 == 2) {
+                std::lock(simul.resourcesPool.at(0).at(0)->mutex,
+                          simul.resourcesPool.at(0).at(1)->mutex);
+                perror("ereraserrno");
+                std::lock_guard<std::mutex> lock1(
+                        simul.resourcesPool.at(0).at(0)->mutex,
+                        std::adopt_lock);
+                std::lock_guard<std::mutex> lock2(
+                        simul.resourcesPool.at(0).at(1)->mutex,
+                        std::adopt_lock);
+            } else if (r1 == 3) {
+                std::lock(simul.resourcesPool.at(0).at(0)->mutex,
+                          simul.resourcesPool.at(0).at(1)->mutex,
+                          simul.resourcesPool.at(0).at(2)->mutex);
+                std::lock_guard<std::mutex> lock1(
+                        simul.resourcesPool.at(0).at(0)->mutex,
+                        std::adopt_lock);
+                std::lock_guard<std::mutex> lock2(
+                        simul.resourcesPool.at(0).at(1)->mutex,
+                        std::adopt_lock);
+                std::lock_guard<std::mutex> lock3(
+                        simul.resourcesPool.at(0).at(2)->mutex,
+                        std::adopt_lock);
+            }
+            if (r2 == 2) {
+                std::lock(simul.resourcesPool.at(1).at(0)->mutex,
+                          simul.resourcesPool.at(1).at(1)->mutex);
+                std::lock_guard<std::mutex> lock1(
+                        simul.resourcesPool.at(1).at(0)->mutex,
+                        std::adopt_lock);
+                std::lock_guard<std::mutex> lock2(
+                        simul.resourcesPool.at(1).at(1)->mutex,
+                        std::adopt_lock);
+            } else if (r2 == 3) {
+                std::lock(simul.resourcesPool.at(1).at(0)->mutex,
+                          simul.resourcesPool.at(1).at(1)->mutex,
+                          simul.resourcesPool.at(1).at(2)->mutex);
+                std::lock_guard<std::mutex> lock1(
+                        simul.resourcesPool.at(1).at(0)->mutex,
+                        std::adopt_lock);
+                std::lock_guard<std::mutex> lock2(
+                        simul.resourcesPool.at(1).at(1)->mutex,
+                        std::adopt_lock);
+                std::lock_guard<std::mutex> lock3(
+                        simul.resourcesPool.at(1).at(2)->mutex,
+                        std::adopt_lock);
+            }
+        } catch (std::exception &e) {
+            std::cout << "running task, with exception..." << e.what()
+                      << std::endl;
+            return;
 
-        std::lock(left_fork.mutex, right_fork.mutex);
+        }
 
-        std::lock_guard<std::mutex> left_lock(left_fork.mutex, std::adopt_lock);
-        std::lock_guard<std::mutex> right_lock(right_fork.mutex,
-                                               std::adopt_lock);
 
         print("task is running");
 
@@ -89,8 +138,10 @@ void dine() {
         std::array<task, task_no> tasks
                 {
                         {
-                                {"task1", table, table.resourcesPool[0][0], table.resourcesPool[0][1]},
-                                {"task2", table, table.resourcesPool[0][0], table.resourcesPool[1][0],},
+                                {"task1", table, 2, 1},
+                                {"task2", table, 2, 1},
+                                {"task3", table, 2, 1},
+                                {"task4", table, 2, 1},
                         }
                 };
 
