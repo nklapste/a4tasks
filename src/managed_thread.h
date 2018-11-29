@@ -21,6 +21,7 @@ public:
     ManagedThread() : the_thread() {}
 
     void Start() {
+        started = true;
         // This will start the thread. Notice move semantics!
         the_thread = std::thread(&ManagedThread::ThreadMain, this);
         std::stringstream ss;
@@ -29,6 +30,7 @@ public:
     }
 
     void Stop() {
+        started = false;
         std::stringstream ss;
         ss << the_thread.get_id();
         printf("DEBUG: stopping thread: %s\n", ss.str().c_str());
@@ -36,8 +38,8 @@ public:
         if (the_thread.joinable()) the_thread.join();
     }
 
-    bool isRunning() {
-        return !the_thread.joinable();
+    bool isStarted() {
+        return started;
     }
 
 protected:
@@ -50,7 +52,7 @@ protected:
 private:
     bool stop_thread = false; // Super simple thread stopping.
     std::thread the_thread;
-
+    bool started = false;
 };
 
 

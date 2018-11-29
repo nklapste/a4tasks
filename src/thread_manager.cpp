@@ -180,12 +180,11 @@ void ThreadManager::checkMonitorThread() {
     if (monitorThreadDelayPassed()) {
         printf("DEBUG: monitor thread delay passed\n");
         setMonitorThreadDelay(monitorTime);
-        if (monitorThread.isRunning()) {
+        if (!monitorThread.isStarted()) {
             monitorThread.Start();
         } else {
             monitorThread.Stop();
         }
-        // TODO: spawn monitor thread
     }
 }
 
