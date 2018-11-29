@@ -7,6 +7,8 @@
  * @version 0.0.0
  */
 
+#include <chrono>
+
 #include "thread_manager.h"
 #include "input_file.h"
 #include "task_thread.h"
@@ -36,6 +38,10 @@ uint ThreadManager::getNIter() const {
  */
 void ThreadManager::start() {
     printf("INFO: staring ThreadManager\n");
+
+    // note the start time for later printing the elapsed time
+    startTime = std::chrono::duration_cast<milliseconds>(
+            std::chrono::steady_clock::now().time_since_epoch());
     // TODO: implement
     for (;;) {
         checkInputFileLine(inputFileStream);
@@ -128,4 +134,14 @@ void ThreadManager::listTasks() {
 //    printf("\t%s: (needed=%4u, held=%4u)\n");
     // TODO: print task run stats
 //    printf("RUN: %u times, WAIT: %li msec\n", );
+}
+
+/**
+ * Print the total elapsed running time of the simulator (i.e. {@code ThreadManager}.
+ */
+void ThreadManager::listElapsedTime() {
+    printf("INFO: Running time= %li msec\n",
+           (std::chrono::duration_cast<milliseconds>(
+                   std::chrono::steady_clock::now().time_since_epoch()) -
+            startTime).count());
 }

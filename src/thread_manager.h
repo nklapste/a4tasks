@@ -42,6 +42,8 @@ public:
 
     void listTasks();
 
+    void listElapsedTime();
+
 private:
     /**
      * Path to the input file to parse and use.
@@ -53,6 +55,8 @@ private:
      * instance of a {@code MonitorThread} will start and run.
      */
     milliseconds monitorTime;
+
+    milliseconds startTime;
 
     /**
      * Integer noting the amount of iterations that each {@code TaskThread}
