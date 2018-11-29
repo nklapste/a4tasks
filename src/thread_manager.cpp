@@ -91,8 +91,9 @@ void ThreadManager::parseInputFileLine(const string &line) {
         ResourcesLine resourcesLine = parseResourcesLine(line);
     } else if (inputLineType == TASK_LINE) {
         TaskLine taskLine = parseTaskLine(line);
-        taskThreads.insert(
-                std::make_pair(get<1>(taskLine), TaskThread(get<1>(taskLine))));
+        taskThreads.insert(std::make_pair(get<1>(taskLine),
+                                          TaskThread(get<1>(taskLine),
+                                                     getNIter())));
     }
     // TODO: act on parsed input line
 }

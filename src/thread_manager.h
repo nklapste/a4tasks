@@ -71,9 +71,6 @@ private:
 
     void parseInputFileLine(const string &line);
 
-    // montor thread timing control
-    MonitorThread monitorThread;
-
     milliseconds monitorThreadEndTime = std::chrono::duration_cast<milliseconds>(
             std::chrono::system_clock::now().time_since_epoch()
     );;

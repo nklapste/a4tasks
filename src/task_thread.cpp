@@ -1,3 +1,5 @@
+#include <utility>
+
 // Copyright 2018 Nathan Klapstein
 
 /**
@@ -13,8 +15,11 @@
  * Constructor for a {@code TaskThread}.
  *
  * @param taskID {@code TaskID}
+ * @param iterNum {@code uint}
  */
-TaskThread::TaskThread(TaskID taskID) : ManagedThread(), taskID(taskID) {
+TaskThread::TaskThread(TaskID taskID, uint iterNum) : ManagedThread(),
+                                                      taskID(std::move(taskID)),
+                                                      iterNum(iterNum) {
 
 }
 

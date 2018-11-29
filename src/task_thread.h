@@ -20,7 +20,7 @@ using std::chrono::milliseconds;
 
 class TaskThread : public ManagedThread {
 public:
-    explicit TaskThread(TaskID taskID);
+    explicit TaskThread(TaskID taskID, uint iterNum);
 
     TaskID getTaskID() const;
 
