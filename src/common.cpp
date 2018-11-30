@@ -8,13 +8,13 @@
  */
 
 #include <bits/types/struct_timespec.h>
-#include <stddef.h>
-#include <errno.h>
 #include <time.h>
-#include <cstring>
-#include <cstdio>
-#include <pthread.h>
+#include <zconf.h>
 #include <cstdlib>
+#include <pthread.h>
+#include <cstring>
+#include <cerrno>
+#include <cstdio>
 
 #include "common.h"
 
@@ -29,7 +29,7 @@ void delay(int milliseconds)
     interval.tv_sec = (long) milliseconds / 1000;
     interval.tv_nsec = (long) ((milliseconds % 1000) * 1000000);
     if (nanosleep(&interval, nullptr) < 0) {
-        printf("WARNING: running delay: %s\n", strerror(errno));
+        printf("WARNING: delay: %s\n", strerror(errno));
     }
 }
 
