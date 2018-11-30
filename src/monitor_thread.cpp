@@ -8,7 +8,6 @@
  */
 
 #include "monitor_thread.h"
-#include "thread_manager.h"
 
 /**
  * Prints the status of all tasks (i.e. {@code TaskThread}s.
@@ -23,18 +22,13 @@ void MonitorThread::monitorPrint() {
 //    printf("INFO: monitor: [WAIT] %s\n"
 //           "\t[RUN] %s\n"
 //           "\t[IDLE] %s\n");
-    for (auto const&[key, val] : threadManager->getTaskThreadMap()) {
-        printf("TEST: %s\n", key.getTaskIDString().c_str());
-    }
 }
 
-MonitorThread::MonitorThread(ThreadManager *threadManager)
-        : ManagedThread(), threadManager(threadManager) {
-    printf("TEST: %u\n", threadManager->getNIter());
+MonitorThread::MonitorThread() : ManagedThread() {
+
 }
 
 void MonitorThread::ThreadMain() {
     printf("TEST: started monitor thread\n");
     monitorPrint();
-//    Stop();
 }

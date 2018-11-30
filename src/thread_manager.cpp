@@ -55,8 +55,7 @@ ThreadManager::ThreadManager(const string &inputFile,
         inputFile(inputFile),
         monitorTime(monitorTime),
         nIter(nIter),
-        inputFileStream(ifstream(inputFile)),
-        monitorThread(MonitorThread(this)) {
+        inputFileStream(ifstream(inputFile)) {
 }
 
 /**
@@ -180,15 +179,5 @@ void ThreadManager::checkMonitorThread() {
     if (monitorThreadDelayPassed()) {
         printf("DEBUG: monitor thread delay passed\n");
         setMonitorThreadDelay(monitorTime);
-        if (!monitorThread.isStarted()) {
-            monitorThread.Start();
-        } else {
-            monitorThread.Stop();
-        }
     }
 }
-
-TaskThreadMap ThreadManager::getTaskThreadMap() {
-    return std::move(taskThreads);
-}
-

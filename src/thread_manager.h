@@ -78,8 +78,6 @@ private:
             std::chrono::system_clock::now().time_since_epoch()
     );;
 
-    MonitorThread monitorThread;
-
     void checkMonitorThread();
 
     bool monitorThreadDelayPassed();
