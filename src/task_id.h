@@ -24,6 +24,18 @@ public:
 
     string getTaskIDString() const;
 
+    bool operator==(const TaskID &taskID) const {
+        return getTaskIDNum() == taskID.getTaskIDNum();
+    }
+
+    bool operator>(const TaskID &taskID) const {
+        return getTaskIDNum() > taskID.getTaskIDNum();
+    }
+
+    bool operator<(const TaskID &taskID) const {
+        return getTaskIDNum() < taskID.getTaskIDNum();
+    }
+
 private:
     uint taskIDNum;
 

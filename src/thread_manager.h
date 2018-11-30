@@ -14,6 +14,7 @@
 #include <string>
 #include <chrono>
 #include <vector>
+#include <map>
 
 #include "monitor_thread.h"
 #include "task_thread.h"
@@ -23,14 +24,12 @@ using std::chrono::milliseconds;
 using std::ifstream;
 using std::vector;
 
-typedef vector<TaskThread> TaskThreadList;
+typedef std::map<TaskID, TaskThread> TaskThreadMap;
 
 class ThreadManager {
 public:
     ThreadManager(const string &inputFile, const milliseconds &monitorTime,
                   const uint &nIter);
-
-    milliseconds getMonitorTime();
 
     uint getNIter() const;
 
@@ -66,13 +65,24 @@ private:
 
     ifstream inputFileStream;
 
-    MonitorThread monitorThread;
-
-    TaskThreadList taskThreads;
+    TaskThreadMap taskThreads;
 
     void checkInputFileLine(ifstream &inputFileStream);
 
     void parseInputFileLine(const string &line);
+
+    // montor thread timing control
+    MonitorThread monitorThread;
+
+    milliseconds monitorThreadEndTime = std::chrono::duration_cast<milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()
+    );;
+
+    void checkMonitorThread();
+
+    bool monitorThreadDelayPassed();
+
+    void setMonitorThreadDelay(milliseconds interval);
 };
 
 

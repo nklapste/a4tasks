@@ -18,11 +18,7 @@ class ManagedThread {
 public:
     /* Explicitly using the default constructor to
      * underline the fact that it does get called */
-    explicit ManagedThread() : the_thread() {}
-    ~ManagedThread() {
-        stop_thread = true;
-        if (the_thread.joinable()) the_thread.join();
-    }
+    ManagedThread() : the_thread() {}
 
     void Start() {
         // This will start the thread. Notice move semantics!
@@ -37,6 +33,7 @@ public:
         ss << the_thread.get_id();
         printf("DEBUG: stopping thread: %s\n", ss.str().c_str());
         stop_thread = true;
+        if (the_thread.joinable()) the_thread.join();
     }
 
 private:

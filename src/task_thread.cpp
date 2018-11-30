@@ -23,7 +23,7 @@ TaskThread::TaskThread(TaskID taskID) : ManagedThread(), taskID(taskID) {
  *
  * @return {@code TaskID}
  */
-TaskID TaskThread::getTaskID() {
+TaskID TaskThread::getTaskID() const {
     return taskID;
 }
 

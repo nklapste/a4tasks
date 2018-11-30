@@ -15,14 +15,6 @@
 
 using std::get;
 
-/**
- * Getter for a {@code ThreadManager}'s {@code milliseconds}.
- *
- * @return {@code milliseconds}
- */
-milliseconds ThreadManager::getMonitorTime() {
-    return monitorTime;
-}
 
 /**
  * Getter for a {@code ThreadManager}'s {@code nIter}.
@@ -37,14 +29,15 @@ uint ThreadManager::getNIter() const {
  * Start the {@code ThreadManager}.
  */
 void ThreadManager::start() {
-    printf("INFO: staring ThreadManager\n");
-
     // note the start time for later printing the elapsed time
     startTime = std::chrono::duration_cast<milliseconds>(
             std::chrono::steady_clock::now().time_since_epoch());
+    printf("INFO: staring ThreadManager startTime: %li\n", startTime.count());
+
     // TODO: implement
     for (;;) {
         checkInputFileLine(inputFileStream);
+        checkMonitorThread();
     }
 }
 
@@ -98,8 +91,8 @@ void ThreadManager::parseInputFileLine(const string &line) {
         ResourcesLine resourcesLine = parseResourcesLine(line);
     } else if (inputLineType == TASK_LINE) {
         TaskLine taskLine = parseTaskLine(line);
-        TaskThread taskThread = TaskThread(get<1>(taskLine));
-        taskThread.Start();
+        taskThreads.insert(
+                std::make_pair(get<1>(taskLine), TaskThread(get<1>(taskLine))));
     }
     // TODO: act on parsed input line
 }
@@ -144,4 +137,46 @@ void ThreadManager::listElapsedTime() {
            (std::chrono::duration_cast<milliseconds>(
                    std::chrono::steady_clock::now().time_since_epoch()) -
             startTime).count());
+}
+
+/**
+ * Check if the current clock time is greater than or equal to the current delay's {@code endTime}.
+ *
+ * @return {@code bool}
+ */
+bool ThreadManager::monitorThreadDelayPassed() {
+    milliseconds curTime = std::chrono::duration_cast<milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()
+    );
+    return curTime >= monitorThreadEndTime;
+}
+
+/**
+ * Set the current delay's {@code endTime}. If a delay is already inplace and is still active
+ * (i.e delayPassed returns {@code false}) add onto the delay's {@code endtime}.
+ *  Otherwise set the delay's {@code endTime} to the given interval plus the current clock time.
+ *
+ * @param interval {@code clock_t}
+ */
+void ThreadManager::setMonitorThreadDelay(milliseconds interval) {
+    printf("DEBUG: adding monitorThread delay interval: %li\n",
+           interval.count());
+    milliseconds currentTime = std::chrono::duration_cast<milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()
+    );
+    if (!monitorThreadDelayPassed()) {
+        monitorThreadEndTime = interval + monitorThreadEndTime;
+    } else {
+        monitorThreadEndTime = interval + currentTime;
+    }
+    printf("DEBUG: setting monitorThread delay interval: currentTime: %lims monitorThreadEndTime: %lims\n",
+           currentTime.count(), monitorThreadEndTime.count());
+}
+
+void ThreadManager::checkMonitorThread() {
+    if (monitorThreadDelayPassed()) {
+        printf("DEBUG: monitor thread delay passed\n");
+        setMonitorThreadDelay(monitorTime);
+        // TODO: spawn monitor thread
+    }
 }

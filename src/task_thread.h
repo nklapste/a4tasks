@@ -22,7 +22,7 @@ class TaskThread : public ManagedThread {
 public:
     explicit TaskThread(TaskID taskID);
 
-    TaskID getTaskID();
+    TaskID getTaskID() const;
 
     pthread_t getTID();
 
@@ -31,6 +31,18 @@ public:
     milliseconds getTime();
 
     void completePrint();
+
+    bool operator==(const TaskThread &taskThread) const {
+        return getTaskID() == taskThread.getTaskID();
+    }
+
+    bool operator>(const TaskThread &taskThread) const {
+        return getTaskID() > taskThread.getTaskID();
+    }
+
+    bool operator<(const TaskThread &taskThread) const {
+        return getTaskID() < taskThread.getTaskID();
+    }
 
 private:
     TaskID taskID;
