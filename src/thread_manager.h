@@ -26,6 +26,7 @@ using std::vector;
 
 typedef std::map<TaskID, TaskThread> TaskThreadMap;
 
+
 class ThreadManager {
 public:
     ThreadManager(const string &inputFile, const milliseconds &monitorTime,
@@ -42,6 +43,7 @@ public:
     void listTasks();
 
     void listElapsedTime();
+
 
 private:
     /**
@@ -74,6 +76,8 @@ private:
     milliseconds monitorThreadEndTime = std::chrono::duration_cast<milliseconds>(
             std::chrono::system_clock::now().time_since_epoch()
     );;
+
+    MonitorThread monitorThread;
 
     void checkMonitorThread();
 

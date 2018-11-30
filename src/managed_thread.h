@@ -36,6 +36,7 @@ public:
         if (the_thread.joinable()) the_thread.join();
     }
 
+protected:
 private:
     bool stop_thread = false; // Super simple thread stopping.
 

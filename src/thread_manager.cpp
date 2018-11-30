@@ -12,6 +12,7 @@
 #include "thread_manager.h"
 #include "input_file.h"
 #include "task_thread.h"
+#include "monitor_thread.h"
 
 using std::get;
 
@@ -54,7 +55,8 @@ ThreadManager::ThreadManager(const string &inputFile,
         inputFile(inputFile),
         monitorTime(monitorTime),
         nIter(nIter),
-        inputFileStream(ifstream(inputFile)) {
+        inputFileStream(ifstream(inputFile)),
+        monitorThread(MonitorThread(this)) {
 }
 
 /**
@@ -181,3 +183,4 @@ void ThreadManager::checkMonitorThread() {
         // TODO: spawn monitor thread
     }
 }
+

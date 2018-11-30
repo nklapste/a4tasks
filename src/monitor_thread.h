@@ -12,9 +12,17 @@
 
 #include "managed_thread.h"
 
+class ThreadManager;
+
 class MonitorThread : public ManagedThread {
 public:
+    explicit MonitorThread(ThreadManager *threadManager);
+
     void monitorPrint();
+
+private:
+    ThreadManager *threadManager;
+
 };
 
 
