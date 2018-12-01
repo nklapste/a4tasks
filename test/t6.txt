@@ -1,0 +1,3 @@
+# An instance of the Dining Philosophers Problem with 5 people
+#
+# finishes instantly
