@@ -18,7 +18,6 @@
 
 #include<string>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/classification.hpp>
 #include <pthread.h>
 #include <fstream>
 #include <errno.h>
@@ -260,7 +259,7 @@ void runIterations(TASK* task) {
     while (true) {
         mutex_lock(&iterationMutex);
 
-        //We need to check if resources are available to grab, if not then unlock and go back to waiting
+        // check if resources are available to grab, if not then unlock and go back to waiting
         bool enoughResources = checkResources(task);
         if (!enoughResources) {	//release mutex and go back to waiting
             mutex_unlock(&iterationMutex);
@@ -268,24 +267,25 @@ void runIterations(TASK* task) {
             continue;
         }
 
-        procureResources(task); //will actually grab the resources from the shared resource pool
+        procureResources(
+                task); // will actually grab the resources from the shared resource pool
         waitFinish = times(&tmswaitend);
         task->totalWaitTime += (waitFinish - waitStart) / (double)clktck * 1000; //update wait time
         mutex_unlock(&iterationMutex);
 
-        //after resources are taken, simulate the execution of the process
-        mutex_lock(&monitorMutex); //cant switch states if monitor is printing
+        // after resources are taken, simulate the execution of the process
+        mutex_lock(&monitorMutex); // cant switch states if monitor is printing
         task->status = RUN;
         mutex_unlock(&monitorMutex);
         delay(task->busyTime);
         task->totalBusyTime += task->busyTime;
 
-        //after running the busytime then return the resources back to the pool
+        // after running the busytime then return the resources back to the pool
         mutex_lock(&iterationMutex);
         returnResources(task);
         mutex_unlock(&iterationMutex);
 
-        //now we wait for idle time and increment iteration counter
+        // now we wait for idle time and increment iteration counter
         mutex_lock(&monitorMutex); // cant switch states if monitor printing
         task->status = IDLE;
         mutex_unlock(&monitorMutex);
@@ -300,7 +300,7 @@ void runIterations(TASK* task) {
             return;
         }
 
-        mutex_lock(&monitorMutex); //cant switch states if monitor printing
+        mutex_lock(&monitorMutex); // cant switch states if monitor printing
         task->status = WAIT;
         mutex_unlock(&monitorMutex);
         waitStart = times(&tmswaitstart);
@@ -313,16 +313,16 @@ void runIterations(TASK* task) {
  *
  * @param arg {@code long}
  */
-void *threadExecute(void *arg)
-{	/* This is the starting routine when a new thread is created*/
-    //first iterate through the task list and assign an unassigned task to this thread
+void *threadExecute(void *arg) {
+    // first iterate through the task list and assign an unassigned task to this thread
     TID[(long)arg] = pthread_self();
     for (auto &task : taskList) {
         if (task.assigned) {
             continue;
         }
-        task.assigned = true; //use this task for the main loop
-        mutex_unlock(&threadMutex); //release mutex for next thread and jump to main loop
+        task.assigned = true; // use this task for the main loop
+        mutex_unlock(
+                &threadMutex); // release mutex for next thread and jump to main loop
         runIterations(&task);
         break;
     }
@@ -407,14 +407,14 @@ void start(string inputFile, long monitorTime, int iterations)
 
     parseTaskFile(fileName);
 
-    //create monitor thread
+    // create monitor thread
     rval = pthread_create(&ntid, nullptr, monitorThread, (void*) monitorTime);
     if (rval) {
         fprintf(stderr, "ERROR: pthread_create: %s\n", strerror(rval));
         exit(1);
     }
 
-    //for every task in the task list we need to execute a new thread
+    //f or every task in the task list we need to execute a new thread
     for (long i = 0; i < taskList.size(); i++)
     {
         mutex_lock(&threadMutex);
@@ -425,7 +425,7 @@ void start(string inputFile, long monitorTime, int iterations)
         }
     }
     delay(400);
-    //wait for all other threads to complete before continuing
+    // wait for all other threads to complete before continuing
     for (long i = 0; i < taskList.size(); i++)
     {
         rval = pthread_join(TID[i], nullptr);
