@@ -7,8 +7,6 @@
  * @version 0.0.0
  */
 
-#include <bits/types/struct_timespec.h>
-
 #include "monitor.h"
 #include "common.h"
 #include "simulator.h"
