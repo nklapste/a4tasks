@@ -7,7 +7,6 @@
  * @version 0.0.0
  */
 
-#include <bits/types/struct_timespec.h>
 #include <time.h>
 #include <zconf.h>
 #include <cstdlib>
