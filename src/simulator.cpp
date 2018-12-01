@@ -17,13 +17,13 @@
 #include<vector>
 
 #include<string>
-#include <boost/algorithm/string/split.hpp>
 #include <pthread.h>
 #include <fstream>
 #include <errno.h>
 #include <time.h>
 #include <map>
 #include <sys/times.h>
+#include <cstring>
 
 #include "task.h"
 #include "monitor.h"
@@ -410,8 +410,8 @@ void start(string inputFile, long monitorTime, int iterations)
     // create monitor thread
     rval = pthread_create(&ntid, nullptr, monitorThread, (void*) monitorTime);
     if (rval) {
-        fprintf(stderr, "ERROR: pthread_create: %s\n", strerror(rval));
-        exit(1);
+        perror("ERROR: pthread_create:\n");
+        exit(rval);
     }
 
     //f or every task in the task list we need to execute a new thread
@@ -420,8 +420,8 @@ void start(string inputFile, long monitorTime, int iterations)
         mutex_lock(&threadMutex);
         rval = pthread_create(&ntid, nullptr, threadExecute, (void *) i);
         if (rval) {
-            fprintf(stderr, "ERROR: pthread_create: %s\n", strerror(rval));
-            exit(1);
+            perror("ERROR: pthread_create:\n");
+            exit(rval);
         }
     }
     delay(400);
@@ -430,8 +430,8 @@ void start(string inputFile, long monitorTime, int iterations)
     {
         rval = pthread_join(TID[i], nullptr);
         if (rval) {
-            fprintf(stderr, "ERROR: pthread_join: %s\n", strerror(rval));
-            exit(1);
+            perror("ERROR: pthread_join:\n");
+            exit(rval);
         }
     }
 
