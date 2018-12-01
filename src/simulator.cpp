@@ -41,12 +41,14 @@
 using namespace std;
 
 //GLOBAL VARIABLES
-std::map<std::string, int> resourceMap; //contain the resources from the file
-std::vector<TASK> taskList; //contains all the tasks from the file
+std::map<std::string, int> resourceMap;
+std::vector<TASK> taskList;
+
 pthread_mutex_t threadMutex;
 pthread_mutex_t iterationMutex;
 pthread_mutex_t monitorMutex; // used for monitor to prevent states from switching
 pthread_t TID[NTASKS];
+
 int ITERATIONS;
 clock_t START, END;
 struct tms tmsstart, tmsend;
@@ -64,23 +66,26 @@ void addResources(char* nameCountPair)
     int tempCount;
     string tempName(strtok(tempPair, ":"));
     tempCount = atoi(strtok(nullptr, ":"));
-    //add to map https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/
-    //resourceMap.insert(pair<char*, int>(tempName, tempCount));
     resourceMap[tempName] = tempCount;
 }
 
+/**
+ * Parse out a resource line. (e.g. resources a:1 b:2)
+ *
+ * @param resourceLine {@code char*}
+ */
 void defineResources(char* resourceLine)
 {
-    //we have one line and need to tokenize each resource and map it.
     char* temp;
     char line[100];
     vector<char*> resourceStrings;
 
     strcpy(line, resourceLine);
-    temp = strtok(line, " "); //temp is keyword RESOURCES
-    temp = strtok(nullptr, " "); //move it to first name:count pair
-    while (temp != nullptr)
-    {
+    temp = strtok(line, " ");
+
+    // parse all the name:value pairs
+    temp = strtok(nullptr, " ");
+    while (temp != nullptr) {
         resourceStrings.push_back(temp);
         temp = strtok(nullptr, " ");
     }
@@ -91,11 +96,16 @@ void defineResources(char* resourceLine)
     }
 }
 
-void readTaskFile(char* fileName)
+/**
+ * Parse and initialize resources and tasks from a given input file.
+ *
+ * @param taskFilePath {@code char *}
+ */
+void parseTaskFile(char *taskFilePath)
 {
     string line; //line read from file
 
-    ifstream file(fileName);
+    ifstream file(taskFilePath);
     if (file.fail()) {
         printf("ERROR: FILE DOES NOT EXIST\n");
         exit(1);
@@ -155,9 +165,14 @@ void readTaskFile(char* fileName)
     }
 }
 
-bool checkResources(TASK* task)
-{	//this function is called by a thread when it is going to check available resources
-    //We need to check if resources are available to grab, if not then unlock and go back to waiting
+/**
+ * Called by a task needs to check if thier are resources up for grabs.
+ * If none are the task goes back to waiting.
+ *
+ * @param task {@code TASK*}
+ * @return {@code bool}
+ */
+bool checkResources(TASK* task) {
     for (auto &reqResource : task->reqResources) {
         char resource[50];
         strcpy(resource, reqResource.c_str());
@@ -194,8 +209,13 @@ void procureResources(TASK* task)
     }
 }
 
-void returnResources(TASK* task)
-{	//this function will return the appropriate resources when called
+/**
+ * Return the appropriate amount of resources used by a {@code TASK} back to
+ * the global {@code resourceMap}
+ *
+ * @param task {@code TASK*}
+ */
+void returnResources(TASK* task) {
     for (auto &reqResource : task->reqResources) {
         char resource[50];
         strcpy(resource, reqResource.c_str());
@@ -219,11 +239,16 @@ float getTime()
     return time/(double) clktck * 1000;
 }
 
-void runIterations(TASK* task)
-{ /*After a thread is created, it will come to this function to execute its
-  main loop. We use another mutex to handle race conditions with other threads*/
+/**
+ * After a {@code TASK} is created it needs to run its specified amount of
+ * iterations. This provides controller logic as to make sure other mutexes
+ * don't encounter race conditions with other threads. While allowing the
+ * {@code TASK} to run until its specified number of iterations is met.
+ *
+ * @param task {@code TASK*}
+ */
+void runIterations(TASK* task) {
     int iterationCounter = 0;
-    bool enoughResources;
     clock_t waitStart, waitFinish; //used to determine how long a task will wait
     struct tms tmswaitstart, tmswaitend;
 
@@ -232,14 +257,12 @@ void runIterations(TASK* task)
     mutex_unlock(&monitorMutex);
 
     waitStart = times(&tmswaitstart);
-    while (true)
-    {
+    while (true) {
         mutex_lock(&iterationMutex);
 
         //We need to check if resources are available to grab, if not then unlock and go back to waiting
-        enoughResources = checkResources(task);
-        if (!enoughResources)
-        {	//release mutex and go back to waiting
+        bool enoughResources = checkResources(task);
+        if (!enoughResources) {	//release mutex and go back to waiting
             mutex_unlock(&iterationMutex);
             delay(20);
             continue;
@@ -382,7 +405,7 @@ void start(string inputFile, long monitorTime, int iterations)
 
     START = times(&tmsstart);
 
-    readTaskFile(fileName);
+    parseTaskFile(fileName);
 
     //create monitor thread
     rval = pthread_create(&ntid, nullptr, monitorThread, (void*) monitorTime);
