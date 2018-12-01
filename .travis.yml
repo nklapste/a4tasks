@@ -9,6 +9,7 @@ addons:
     - boost-latest
     packages:
     - g++-7
+    - libboost1.55-all-dev
 
 
 stages:

@@ -16,7 +16,7 @@ BINARY = a4tasks
 RM=rm -v -rf
 MKDIR = mkdir
 
-CPPFLAGS=-g -pthread -I/sw/include/root -std=c++17 -Wall
+CPPFLAGS=-g -pthread -I/sw/include/root -std=c++17 -Wall -lboost_filesystem
 
 BUILDDIR = build
 SOURCEDIR = src
