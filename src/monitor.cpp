@@ -14,11 +14,12 @@
 #include "simulator.h"
 
 // EXTERNAL GLOBALS in simu.h
-extern std::map<std::string, int> resourceMap; //contain the resources from the file
-extern std::vector<TASK> taskList; //contains all the tasks from the file
+extern std::map<std::string, int> resourceMap;
+extern std::vector<TASK> taskList;
+
 extern pthread_mutex_t threadMutex;
 extern pthread_mutex_t iterationMutex;
-extern pthread_mutex_t monitorMutex; // used for monitor to prevent states from switching
+extern pthread_mutex_t monitorMutex;
 extern pthread_t TID[NTASKS];
 
 /**
