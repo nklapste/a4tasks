@@ -10,13 +10,12 @@
 #include "simulator.h"
 
 #include <stdio.h>
-#include<iostream>
-#include<sys/resource.h>
+#include <iostream>
+#include <sys/resource.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include<vector>
-
-#include<string>
+#include <vector>
+#include <string>
 #include <pthread.h>
 #include <fstream>
 #include <errno.h>
