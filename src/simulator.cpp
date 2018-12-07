@@ -170,7 +170,7 @@ void parseTaskFile(char *taskFilePath)
  * @param task {@code TASK*}
  * @return {@code bool}
  */
-bool checkResources(TASK* task) {
+bool checkResources(TASK *task) {
     for (auto &reqResource : task->reqResources) {
         char resource[50];
         strcpy(resource, reqResource.c_str());
@@ -213,7 +213,7 @@ void procureResources(TASK* task)
  *
  * @param task {@code TASK*}
  */
-void returnResources(TASK* task) {
+void returnResources(TASK *task) {
     for (auto &reqResource : task->reqResources) {
         char resource[50];
         strcpy(resource, reqResource.c_str());
@@ -234,7 +234,7 @@ float getTime()
 {
     END = times(&tmsend);
     clock_t time = END - START;
-    return time/(double) clktck * 1000;
+    return time / (float) clktck * 1000;
 }
 
 /**
@@ -245,7 +245,7 @@ float getTime()
  *
  * @param task {@code TASK*}
  */
-void runIterations(TASK* task) {
+void runIterations(TASK *task) {
     int iterationCounter = 0;
     clock_t waitStart, waitFinish; //used to determine how long a task will wait
     struct tms tmswaitstart, tmswaitend;
@@ -380,7 +380,7 @@ void printTerminationInfo()
  * @param monitorTime {@code long}
  * @param iterations {@code int}
  */
-void start(string inputFile, long monitorTime, int iterations)
+void start(string inputFile, unsigned long monitorTime, unsigned int iterations)
 {
     int rval;
     char fileName[20];
@@ -394,10 +394,8 @@ void start(string inputFile, long monitorTime, int iterations)
     mutex_init(&monitorMutex);
 
     // get number of clock cycles per second. Used for timing functions
-    if (clktck == 0)
-    {
-        if ((clktck = sysconf(_SC_CLK_TCK)) < 0)
-        {
+    if (clktck == 0) {
+        if ((clktck = sysconf(_SC_CLK_TCK)) < 0) {
             printf("ERROR: systemconf error\n"); exit(-1);
         }
     }
@@ -423,8 +421,9 @@ void start(string inputFile, long monitorTime, int iterations)
             exit(rval);
         }
     }
-    delay(400);
     // wait for all other threads to complete before continuing
+    delay(400);
+
     for (long i = 0; i < taskList.size(); i++)
     {
         rval = pthread_join(TID[i], nullptr);

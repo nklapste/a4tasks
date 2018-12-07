@@ -19,6 +19,7 @@
 #define NTASKS 25
 #define NRES_TYPES 10
 
-void start(std::string inputFile, long monitorTime, int iterations);
+void start(std::string inputFile, unsigned long monitorTime,
+           unsigned int iterations);
 
 #endif //A4TASKS_SIMU_H
