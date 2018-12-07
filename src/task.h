@@ -24,16 +24,16 @@ typedef enum {WAIT, RUN, IDLE} STATUS;
  * Contains the details of a particular task (e.g. name, busy time, idle time, required resources)
  */
 typedef struct {
-    char name[100];
+    bool assigned;
     int busyTime;
     int idleTime;
+    int timesExecuted;
+    STATUS status;
     long totalBusyTime;
     long totalIdleTime;
     long totalWaitTime;
+    char name[100];
     std::vector<std::string> reqResources;
-    bool assigned;
-    int timesExecuted;
-    STATUS status;
 } TASK;
 
 #endif //A4TASKS_TASK_H
