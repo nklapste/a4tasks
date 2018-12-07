@@ -59,6 +59,7 @@ void *monitorThread(void *arg)
         delay(monitorTime);
         mutex_lock(&monitorMutex);
         printMonitor();
-        mutex_unlock(&monitorMutex); //monitor mutex ensures the tasks will not change states while printing
+        // monitor mutex locks the tasks
+        mutex_unlock(&monitorMutex);
     }
 }

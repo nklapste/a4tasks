@@ -34,8 +34,8 @@ int main(int argc, char **argv) {
     }
 
     string inputFile = argv[1];
-    long monitorTime = static_cast<long>(atoi(argv[2]));
-    uint nIter = static_cast<uint>(atoi(argv[3]));
+    auto monitorTime = static_cast<unsigned long>(atoi(argv[2]));
+    auto nIter = static_cast<unsigned int>(atoi(argv[3]));
 
     // start the simulation
     start(inputFile, monitorTime, nIter);
