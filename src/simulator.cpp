@@ -344,7 +344,7 @@ void printTerminationInfo()
     }
 
     printf("INFO: System Tasks:\n");
-    for (int i = 0; i < taskList.size(); i++)
+    for (size_t i = 0; i < taskList.size(); i++)
     {
         char status[20];
         if (taskList.at(i).status == IDLE) {
@@ -354,7 +354,8 @@ void printTerminationInfo()
         } else {
             strcpy(status, RUN_FLAG);
         }
-        printf("[%d] %s (%s, runTime= %lu msec, idleTime= %lu msec):\n", i, taskList.at(i).name, status,
+        printf("[%zu] %s (%s, runTime= %lu msec, idleTime= %lu msec):\n", i,
+               taskList.at(i).name, status,
                taskList.at(i).totalBusyTime, taskList.at(i).totalIdleTime);
         printf("\t (tid= %lu\n", TID[i]);
         // print the required resources
@@ -412,7 +413,7 @@ void start(string inputFile, unsigned long monitorTime, unsigned int iterations)
     }
 
     //f or every task in the task list we need to execute a new thread
-    for (long i = 0; i < taskList.size(); i++)
+    for (size_t i = 0; i < taskList.size(); i++)
     {
         mutex_lock(&threadMutex);
         rval = pthread_create(&ntid, nullptr, threadExecute, (void *) i);
@@ -424,7 +425,7 @@ void start(string inputFile, unsigned long monitorTime, unsigned int iterations)
     // wait for all other threads to complete before continuing
     delay(400);
 
-    for (long i = 0; i < taskList.size(); i++)
+    for (size_t i = 0; i < taskList.size(); i++)
     {
         rval = pthread_join(TID[i], nullptr);
         if (rval) {
