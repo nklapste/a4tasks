@@ -78,7 +78,7 @@ more, space character(s). There is no white space around the `:` field separator
 #### Example Input File
 The following input file corresponds to an instance of the Dining Philosophers
 Problem with 5 people, denoted `t1` to `t5`. The five chopsticks correspond to
-five resource types, denoted `A` to `E`. Each philosopher spends 
+five resource types, denoted `A` to `E`. Each philosopher (task) spends
 50 milliseconds eating, followed by 100 milliseconds thinking, before getting
 hungry again.
 

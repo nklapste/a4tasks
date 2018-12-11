@@ -39,6 +39,41 @@ jobs:
       - sudo apt-get install -qq cppcheck
     script:
       - cppcheck --error-exitcode=1 .
+  - name: "test t1.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t1.txt 2000 100
+  - name: "test t2.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t2.txt 2000 100
+  - name: "test t3.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t3.txt 2000 100
+  - name: "test t5.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t5.txt 2000 100
+  - name: "test t6.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t6.txt 2000 100
+  - name: "test t7.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t7.txt 2000 100
+  - name: "test t9.txt"
+    script:
+      - make clean
+      - make
+      - ./a4tasks test/t7.txt 2000 100
   - name: "lint"
     language: python
     python: 3.6

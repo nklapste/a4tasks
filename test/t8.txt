@@ -1,0 +1,6 @@
+# An instance of the Dining Philosophers Problem with 5 people
+#
+# t1 should always be WAITing
+# should never terminate
+resources  B:1
+task       t1 50 100  A:1

@@ -9,11 +9,10 @@
 
 #include <string>
 #include <iostream>
-#include <chrono>
-#include "task_manager.h"
+
+#include "simulator.h"
 
 using std::string;
-using std::chrono::milliseconds;
 
 /**
  * Main entry point for a4tasks.
@@ -35,11 +34,11 @@ int main(int argc, char **argv) {
     }
 
     string inputFile = argv[1];
-    milliseconds monitorTime = static_cast<milliseconds>(atoi(argv[2]));
-    uint nIter = static_cast<uint>(atoi(argv[3]));
+    auto monitorTime = static_cast<unsigned long>(atoi(argv[2]));
+    auto nIter = static_cast<unsigned int>(atoi(argv[3]));
 
-    TaskManager taskManager = TaskManager(inputFile, monitorTime, nIter);
-    taskManager.start();
+    // start the simulation
+    start(inputFile, monitorTime, nIter);
 
     return 0;
 }

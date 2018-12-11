@@ -1,0 +1,4 @@
+# An instance of the Dining Philosophers Problem with 5 people
+#
+# finishes instantly
+resources  A:1 B:1 C:1 D:1 E:1
